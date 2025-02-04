@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { MessageCircle, X } from "lucide-react";
 import ChatBox from "./ChatBox";
-
+// TODO: Add api key prop to ChatBox
 const ChatWidget = () => {
     const [openChatBox, setOpenChatBox] = useState(false);
     return (

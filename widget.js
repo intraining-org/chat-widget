@@ -1,11 +1,12 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import {createRoot} from "react-dom/client";
 import ChatWidget from "./src/app/components/ChatWidget";
 
 const initChatWidget = () => {
     const chatWidgetDiv = document.querySelector(".chat-widget");
     if (chatWidgetDiv) {
-        ReactDOM.render(<ChatWidget></ChatWidget>, chatWidgetDiv);
+        const root = createRoot(chatWidgetDiv);
+        root.render(<ChatWidget></ChatWidget>, chatWidgetDiv);
     }
 };
 
