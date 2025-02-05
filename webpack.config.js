@@ -18,7 +18,7 @@ const config = {
         rules: [
             {
                 test: /\.(js|jsx|ts|tsx)$/, // Handle both JS and TS files
-                exclude: /node_modules/,
+                exclude: /node_modules|examples/,
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -33,11 +33,12 @@ const config = {
         ],
     },
     resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src'),
+        },
         extensions: [".tsx", ".ts", ".js", ".jsx"],
     },
     externals: {
-        react: "React",
-        'react-dom': "ReactDOM",
     },
 };
 
