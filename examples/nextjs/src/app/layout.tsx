@@ -33,7 +33,7 @@ export default function RootLayout({
       >
       <div id={"chat-widget"} data-apikey={"sk-12345ABCDE67890FGHIJ09876KLMNOPQR"} data-theme={"light"}/>
       <Script
-          src="/chat-widget.js"
+          src="https://cdn.jsdelivr.net/gh/intraining-org/chat-widget/dist/chat-widget.js"
           strategy="afterInteractive"
       />
       {children}
