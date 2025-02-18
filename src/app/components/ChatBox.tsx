@@ -1,54 +1,86 @@
-import React from "react";
-import { MessageType } from "./Message";
-import {HeadsetIcon, SendHorizonal} from "lucide-react";
-import {Button} from "@/components/ui/button";
-import AutoGrowingTextarea from "@/components/ui/autoGrowingTextArea";
-import { motion } from "framer-motion";
+"use client";
+import React, {useEffect, useRef} from "react";
+import {HeadsetIcon} from "lucide-react";
+import ChatBubble from "@/app/components/ChatBubble";
+import {MessageType, PersonType, Theme} from "@/types";
+import ChatBoxInputForm from "@/app/components/ChatBoxInputForm";
+import MessageLoading from "@/app/components/MessageLoading";
 
-const data: MessageType[] = [
-    {
-        message: ["Hi, How can I help you?"],
-        person: "support",
-        time: "24 Nov 2024",
-    },
-    {
-        message: ["I need help about booking the flight."],
-        person: "user",
-        time: "24 Nov 2024",
-    },
-    {
-        message: [
-            "Alright! What kinds of help do you need right now?",
-            "Could you tell me in details please.",
-        ],
-        person: "support",
-        time: "24 Nov 2024",
-    },
-];
-
-interface ChatBoxProps{
-    theme: "dark" | "light";
+interface ChatBoxProps {
+    theme: Theme
 }
 
-const ChatBox = ({theme}:ChatBoxProps) => {
-    const themeClasses = theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900 border border-gray-300";
-    const buttonThemeClasses = theme === "dark" ? "bg-white text-gray-900 hover:bg-gray-300 hover:text-gray-900" : "bg-gray-900 text-white border border-gray-300";
+const ChatBox = ({theme}: ChatBoxProps) => {
+    const lastMessageRef = useRef<HTMLDivElement>(null);
+    const [supportTyping, setSupportTyping] = React.useState<boolean>(false);
+    const [messageHistory, setMessageHistory] = React.useState<MessageType[]>([{
+        message: ["Hi, how can I help you?"],
+        person: PersonType.SUPPORT,
+        time: new Date(Date.now())
+    }]);
+    useEffect(() => {
+        if (messageHistory[messageHistory.length - 1].person === PersonType.USER) {
+            setSupportTyping(true);
+            setTimeout(() => {
+                setMessageHistory([...messageHistory, {
+                    message: ["Hello, how can I help you?"],
+                    person: PersonType.SUPPORT,
+                    time: new Date(Date.now())
+                }]);
+                setSupportTyping(false);
+                // play a sound
+            }, 2000);
+        }
+    }, [messageHistory]);
+    useEffect(() => {
+        if (messageHistory[messageHistory.length - 1].person === PersonType.SUPPORT) {
+            new Audio("/chat-receive.mp3").play().then();
+        } else {
+            new Audio("/chat-send.mp3").play().then();
+        }
+        lastMessageRef.current?.scrollIntoView({behavior: "smooth"});
+    }, [messageHistory]);
+
+    const themeClasses = theme === Theme.DARK ? "bg-gray-900 text-white" : "bg-white text-gray-900 border border-gray-300";
+
     return (
         <div
-            className={`flex flex-col justify-between p-4 rounded-xl absolute bottom-0 right-0 ${themeClasses}`} style={{width: '300px', height: '500px'}}
+            className={`flex flex-col justify-between rounded-xl absolute bottom-0 right-0 ${themeClasses}`}
+            style={{width: '400px', height: '700px'}}
         >
-            <div className="flex flex-col items-center justify-around gap-2">
-                <HeadsetIcon className="" strokeWidth={1}></HeadsetIcon>
-                <h3 className="text-base">How can we help you?</h3>
+            <div className={"overflow-y-auto w-full"}>
+                <div className="flex flex-col bg-gray-100 items-center justify-around gap-2 p-4">
+                    <div className={"rounded-full p-2 bg-gray-800"}>
+                        <HeadsetIcon className="text-white" strokeWidth={1}></HeadsetIcon>
+                    </div>
+                    <h3 className="text-base">How can we help you?</h3>
+                </div>
+                <div className={"p-4"}>
+                    <div className={"flex flex-col gap-2 justify-end py-8"}>
+                        {
+                            messageHistory.map((message, index) => {
+                                const isLastMessage = index === messageHistory.length - 1;
+                                return (
+                                    <div key={index} ref={isLastMessage ? lastMessageRef : null}>
+                                        <ChatBubble key={index} message={message} theme={theme}
+                                                    previousSender={index > 0 ? messageHistory[index - 1].person : null}/>
+                                    </div>
+                                );
+                            })
+                        }
+                        {
+                            supportTyping ? <MessageLoading theme={theme}/> : null
+                        }
+                    </div>
+                </div>
             </div>
-            <div className={"flex flex-row gap-2 items-end"}>
-                <AutoGrowingTextarea className={`${themeClasses}`}/>
-                <motion.div whileTap={{scale: 0.9}} whileHover={{scale: 1.05}}>
-                    <Button variant="default" size="icon" className={`${buttonThemeClasses}`} type={"submit"}>
-                        <SendHorizonal className={"w-5 h-5"}/>
-                    </Button>
-                </motion.div>
-
+            <div className={`p-4 ${themeClasses} border-r-0 border-b-0 border-l-0 rounded-b-2xl sticky bottom-0`}>
+                <ChatBoxInputForm themeClasses={themeClasses} theme={theme}
+                                  setMessageHistory={(message: string) => setMessageHistory([...messageHistory, {
+                                      message: [message],
+                                      person: PersonType.USER,
+                                      time: new Date(Date.now())
+                                  }])}/>
             </div>
         </div>
     );
