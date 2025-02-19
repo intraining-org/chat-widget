@@ -49,7 +49,7 @@ const ChatBox = ({theme}: ChatBoxProps) => {
             style={{width: '400px', height: '700px'}}
         >
             <div className={"overflow-y-auto w-full"}>
-                <div className="flex flex-col bg-gray-100 items-center justify-around gap-2 p-4">
+                <div className={`flex flex-col rounded-t-xl ${theme == Theme.LIGHT? "bg-gray-200 text-black": "bg-gray-800 text-gray-100"} items-center justify-around gap-2 p-4`}>
                     <div className={"rounded-full p-2 bg-gray-800"}>
                         <HeadsetIcon className="text-white" strokeWidth={1}></HeadsetIcon>
                     </div>

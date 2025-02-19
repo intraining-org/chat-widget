@@ -11,7 +11,7 @@ interface ChatWidgetProps {
 }
 
 // TODO: Add api key prop to ChatBox
-const ChatWidget = ({apiKey, theme = Theme.LIGHT}: ChatWidgetProps) => {
+const ChatWidget = ({theme = Theme.LIGHT}: ChatWidgetProps) => {
     const [openChatBox, setOpenChatBox] = useState(false);
     const themeClasses = theme === Theme.DARK? "bg-gray-900 text-white " : "bg-white text-gray-900 border border-gray-300";
 
