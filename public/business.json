@@ -1,0 +1,77 @@
+[
+  {
+    "business_id": "789001",
+    "business_name": "InnoTech Solutions",
+    "logo_url": "https://example.com/innotech-logo.png",
+    "welcome_text": "Welcome to InnoTech! How can we help?",
+    "theme": {
+      "primary_color": "#ff5733",
+      "text_color": "#ffffff",
+      "background_color": "#1a1a1a"
+    },
+    "chat_settings": {
+      "auto_reply": true,
+      "reply_delay": 1
+    }
+  },
+  {
+    "business_id": "456789",
+    "business_name": "ShopEase",
+    "logo_url": "https://example.com/shopease-logo.png",
+    "welcome_text": "Hi! Need help finding something? Ask us!",
+    "theme": {
+      "primary_color": "#ffcc00",
+      "text_color": "#000000",
+      "background_color": "#ffffff"
+    },
+    "chat_settings": {
+      "auto_reply": false,
+      "reply_delay": 3
+    }
+  },
+  {
+    "business_id": "112233",
+    "business_name": "SecureBank",
+    "logo_url": "https://example.com/securebank-logo.png",
+    "welcome_text": "Hello! Let us assist you with your banking needs.",
+    "theme": {
+      "primary_color": "#004080",
+      "text_color": "#ffffff",
+      "background_color": "#e6f0ff"
+    },
+    "chat_settings": {
+      "auto_reply": true,
+      "reply_delay": 2
+    }
+  },
+  {
+    "business_id": "998877",
+    "business_name": "CareFirst Clinic",
+    "logo_url": "https://example.com/carefirst-logo.png",
+    "welcome_text": "Welcome to CareFirst! How can we assist with your healthcare needs?",
+    "theme": {
+      "primary_color": "#28a745",
+      "text_color": "#ffffff",
+      "background_color": "#f4f4f4"
+    },
+    "chat_settings": {
+      "auto_reply": false,
+      "reply_delay": 4
+    }
+  },
+  {
+    "business_id": "554433",
+    "business_name": "EduPro Academy",
+    "logo_url": "https://example.com/edupro-logo.png",
+    "welcome_text": "Hi! Need help with courses or enrollment? Ask away!",
+    "theme": {
+      "primary_color": "#6200ea",
+      "text_color": "#ffffff",
+      "background_color": "#f3e5f5"
+    },
+    "chat_settings": {
+      "auto_reply": true,
+      "reply_delay": 2
+    }
+  }
+]
